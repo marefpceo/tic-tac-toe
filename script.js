@@ -1,5 +1,5 @@
 const Gameboard = (() => {
-  const gameboard = ['X','O',' ','O',' ','X','O','X','X'];
+  const gameboard = ['','','','','','','','',''];
   const board = document.getElementById('board');
 
   const drawGrid = () => {
@@ -7,23 +7,40 @@ const Gameboard = (() => {
       const div = document.createElement('div');
       const value = document.createTextNode(gameboard[i]);
       div.appendChild(value);
-      board.appendChild(div);
+      board.appendChild(div); 
     }
   }
 
-  const init = () => drawGrid()
+  const addGamePiece = (gamePiece, position) => {
+    gameboard[position] = gamePiece;
+  }
+
+  const clearGrid = () => {
+   let div = board.lastElementChild; 
+    while (div) {
+      board.removeChild(div);
+      div = board.lastElementChild;
+    }
+  }
+
+  const render = () => {
+    clearGrid();
+    drawGrid();
+  }
 
   return {
-    init,
+    render,
+    addGamePiece,
   };
 })();
 
-Gameboard.init();
 
 const Player = () => {
 
 }
 
-const GamePlay = () => {
+const GamePlay = (() => {
   
-}
+})();
+
+Gameboard.render();
