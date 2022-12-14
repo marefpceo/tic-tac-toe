@@ -1,9 +1,15 @@
+@font-face {
+  font-family: 'Iceland';
+  src: url(/source/Iceland-Regular.ttf);
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   background-color: #cfcfcf;
+  font-size: 16pt;
   margin: 0;
   padding: 0;
   min-height: 100vh;
@@ -12,16 +18,27 @@ body {
 header {
   background-color: #cfcfcf;
   color: #8b3b3b;
+  font-family: 'Iceland';
   width: 100%;
+  height: 100%;
   text-align: center;
+  box-shadow: 0px 0px 5px 0px #000000;
+  position: relative;
+  z-index: 10;
 }
 
 h1 {
-  font-size: 3rem;
+  font-size: 6rem;
+  margin: 0;
+  padding: 15px;
 }
 
 section {
+  display: flex;
+  justify-content: space-around;
   background-color: #aaaaaa;
+  min-height: 100vh;
+  width: 100%;
 }
 
 .container {
@@ -29,27 +46,47 @@ section {
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  
 }
 
 #board {
   background-color: #cfcfcf;
   border-style: solid;
   border-color: #8b3b3b;
-  border-width: 2px;
+  border-width: 4px;
   border-radius: 10px;
   display: grid;
+  padding: 20px;
+  margin-top: 10%;
   width: 40vh;
   height: 40vh;
   grid-template-columns: repeat(3, 1fr);  
+  box-shadow: 0px 0px 5px 0px #000000;
 }
 
 #board > div {
-  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: #8b3b3b;
   font-family:sans-serif;
-  text-align: center;
   font-size: 5rem;
   width: 100%;
+  height: 100%;
+}
 
+#board > div:nth-child(2),
+#board > div:nth-child(5),
+#board > div:nth-child(8) {
+  border-left: 3px solid #8b3b3b;
+  border-right: 3px solid #8b3b3b;
+}
+
+#board > div:nth-child(n + 4):nth-child(-n + 6 ) {
+  border-top: 3px solid #8b3b3b;
+  border-bottom: 3px solid #8b3b3b;
+}
+
+#board > div:hover {
+  cursor: pointer;
+  background-color: #aaaaaa35;
 }

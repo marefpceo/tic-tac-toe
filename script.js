@@ -11,12 +11,14 @@ const Gameboard = (() => {
     }
   }
 
+  const init = () => drawGrid()
+
   return {
-    drawGrid,
+    init,
   };
 })();
 
-Gameboard.drawGrid();
+Gameboard.init();
 
 const Player = () => {
 
