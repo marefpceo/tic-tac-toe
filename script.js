@@ -49,13 +49,15 @@ const Player = (name) => {
 
 const GamePlay = (() => {
   const {board} = Gameboard;
-
+  let count = 1;
   const selectPosition = () => {
     board.addEventListener('click', (e) => {
+      
       if (e.target.innerHTML !== '') {
         return;
       } 
-      e.target.innerHTML = 'X';
+      e.target.innerHTML = (count % 2) === 0 ? 'O' : 'X';
+      count += 1;
     });
   }
 
