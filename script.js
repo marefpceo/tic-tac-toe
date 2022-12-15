@@ -31,16 +31,43 @@ const Gameboard = (() => {
   return {
     render,
     addGamePiece,
+    board,
   };
 })();
 
 
-const Player = () => {
+const Player = (name) => {
+  // const {board} = Gameboard;
 
+  const getName = () => name;
+
+  const {addGamePiece} = Gameboard;
+
+  return {getName, addGamePiece};
 }
 
+
 const GamePlay = (() => {
-  
+  const {board} = Gameboard;
+
+  const selectPosition = () => {
+    board.addEventListener('click', (e) => {
+      if (e.target.innerHTML !== '') {
+        return;
+      } 
+      e.target.innerHTML = 'X';
+    });
+  }
+
+  return {
+    selectPosition,
+  };
 })();
 
+
+
+const player1 = Player('Player1');
+const player2 = Player('Player2');
+
+GamePlay.selectPosition();
 Gameboard.render();
