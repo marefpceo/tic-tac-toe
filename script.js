@@ -56,9 +56,17 @@ const GamePlay = (() => {
   const xIndex = [];
 
   const checkWinPattern = (pattern) => {
-    // const validCombo = [['0','1','2'], ['3','4','5']];
-    const result = ['0','1','2'].every(i => pattern.includes(i));
-    console.log(result);
+    const validCombo = [['0','1','2'], ['3','4','5'], ['6','7','8'], ['0','3','6'],
+                        ['1','4','7'], ['2','5','8'], ['0','4','8'], ['2','4','6']];
+    // const validCombo = ['0','1','2'];
+    let result;
+    for (let i = 0; i < validCombo.length; i += 1){
+      result = validCombo[i].every(v => pattern.includes(v));
+      console.log(result);
+      if (result === true) {
+        alert('You win');
+      }
+    }
   }
 
   const checkWinner = () => {
