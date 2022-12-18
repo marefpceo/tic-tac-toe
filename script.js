@@ -1,7 +1,9 @@
 const Gameboard = (() => {
   const gameboard = [];
   const board = document.getElementById('board');
+  const gameArea = document.getElementById('game-area');
 
+  console.log(gameArea);
   const drawGrid = () => {
     for(let i = 0; i < 9; i += 1){
       const div = document.createElement('div');
@@ -22,9 +24,19 @@ const Gameboard = (() => {
     }
   }
 
+  const displayPlayerInfo = () => {
+    const player1Info = gameArea.firstChild.nextSibling;
+    const player2Info = gameArea.lastChild.previousSibling;
+    player1Info.textContent = 'Test';
+    player2Info.textContent = 'Test 2';
+    console.log(player1Info);
+    console.log(player2Info);
+  }
+
   const render = () => {
     clearGrid();
     drawGrid();
+    displayPlayerInfo();
   }
 
   return {
@@ -50,30 +62,42 @@ const GamePlay = (() => {
   const {board} = Gameboard;
   const {addGamePiece} = Gameboard;
   const {render} = Gameboard;
-
-  let count = 1;
   const oIndex = [];
   const xIndex = [];
+
+  let count = 1;
+  let playerCount = 0;
+
+  const createPlayer = (name) => {
+    if (name === '' || name === undefined) {
+      playerCount += 1;
+      this.name = `Player ${playerCount}`;
+    }
+    return this.name;
+  }
 
   const checkWinPattern = (pattern) => {
     const validCombo = [['0','1','2'], ['3','4','5'], ['6','7','8'], ['0','3','6'],
                         ['1','4','7'], ['2','5','8'], ['0','4','8'], ['2','4','6']];
-    // const validCombo = ['0','1','2'];
+
     let result;
     for (let i = 0; i < validCombo.length; i += 1){
-      result = validCombo[i].every(v => pattern.includes(v));
-      console.log(result);
-      if (result === true) {
-        alert('You win');
-      }
+     result = validCombo[i].every(v => pattern.includes(v));
+     if (result === true){
+      return result;
+     }
     }
+    return result;
   }
 
   const checkWinner = () => {
-    // const result = winCombo.every(i => oIndex.includes(i));
     checkWinPattern(oIndex);
-    // console.log(oIndex.toString());
-    // console.log(oIndex.includes());
+    checkWinPattern(xIndex);
+
+    console.log(`O-Index: ${oIndex}`);
+    console.log(`X-Index: ${xIndex}`);
+    console.log(checkWinPattern(oIndex));
+    console.log(checkWinPattern(xIndex));
   }
 
   // Selects the position chosen by the current player
@@ -94,12 +118,16 @@ const GamePlay = (() => {
         xIndex.push(position.slice(-1));
       }
       addGamePiece(selectedPiece, position.slice(-1));      
-      checkWinner();
+      if (count > 4) {
+        checkWinner();
+      }
       count += 1;    
     });
   }
 
   const startGame = () => {
+    const player1 = Player(createPlayer());
+    const player2 = Player(createPlayer());
     selectPosition();
     render();
   }  
