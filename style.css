@@ -40,12 +40,38 @@ section {
   background-color: #aaaaaa;
   height: 95vh;
   width: 100%;
-  margin-top: -5%;
+}
+
+button {
+  background-color: #8b3b3b;
+  color: #cfcfcf;
+  border: 1px solid #cfcfcf;
+  border-radius: 5px;
+  font-size: 1rem;
+  width: 5rem;
+  height: 2rem;
+}
+
+button:active, 
+.buttons > button:hover {
+  background-color: #aaaaaa;
+  color: #8b3b3b;
+  border: 1px solid #8b3b3b;
+  transform: translate(2%, 2%);
 }
 
 .container {
   display: flex;
   flex-direction: column;
+}
+
+.board-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3%;
+  margin-top: -15%;
 }
 
 .player {

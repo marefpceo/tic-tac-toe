@@ -58,6 +58,7 @@ const GamePlay = (() => {
   const oIndex = [];
   const xIndex = [];
   const winModal = document.getElementById('win-modal');
+  const btnGroup = document.querySelectorAll('button');
   
   let moveCount = 1;
   let playerCount = 0;
@@ -126,23 +127,19 @@ const GamePlay = (() => {
         modalHeader.innerHTML = `Congratulations ${player2.getName()}!! You Win!!`;
         winModal.style.display = 'flex';
         player2.gamesWon += 1;
-        playAgain();
       });
     } else if(xWin === true) {
       setTimeout(() => {
         modalHeader.innerHTML = `Congratulations ${player1.getName()}!! You Win!!`;
         winModal.style.display = 'flex';
         player1.gamesWon += 1;
-        playAgain();
       });
     } else if ((moveCount === 9) && (xWin === false && oWin === false)){
       setTimeout(() => {
         modalHeader.innerHTML = `Tie Game`;
         winModal.style.display = 'flex';
-        playAgain();
       });
     }
-    console.log(moveCount);
   }
 
   // Selects the position chosen by the current player
@@ -170,17 +167,24 @@ const GamePlay = (() => {
     });
   }
  
-  winModal.addEventListener('click', (e) => {
-    if (e.target.id === 'yes') {
-      winModal.style.display = 'none';
-      playAgain();
-    }
 
-    if (e.target.id === 'no') {
-      winModal.style.display = 'none';
-      endGame();
-    }
-  });
+
+  btnGroup.forEach(button => {
+    button.addEventListener('click', (e) => {
+      if (e.target.id === 'yes' || e.target.id === 'reset') {
+        winModal.style.display = 'none';
+        playAgain();
+      }
+  
+      if (e.target.id === 'no') {
+        winModal.style.display = 'none';
+        endGame();
+      }
+    });
+  })
+
+  ;
+
 
   const startGame = () => {
     displayPlayerInfo();
