@@ -40,12 +40,14 @@ const Gameboard = (() => {
 })();
 
 
+
 const Player = (name) => {
   const getName = () => name;
   const gamesWon = 0; 
 
   return {getName, gamesWon};
 }
+
 
 
 const GamePlay = (() => {
@@ -72,7 +74,6 @@ const GamePlay = (() => {
 
   const player1 = Player(playerName());
   const player2 = Player(playerName());
-
 
   const checkWinPattern = (pattern) => {
     const validCombo = [['0','1','2'], ['3','4','5'], ['6','7','8'], ['0','3','6'],
@@ -108,11 +109,16 @@ const GamePlay = (() => {
     displayPlayerInfo();
     render();
   }
+
+  const endGame = () => {
+    player1.gamesWon = 0;
+    player2.gamesWon = 0;
+    playAgain();
+  }
   
   const checkWinner = () => {
     const oWin = checkWinPattern(oIndex);
     const xWin = checkWinPattern(xIndex);
-    
     const modalHeader = winModal.querySelector('h3');
 
     if (oWin === true) {
@@ -129,7 +135,14 @@ const GamePlay = (() => {
         player1.gamesWon += 1;
         playAgain();
       });
+    } else if ((moveCount === 9) && (xWin === false && oWin === false)){
+      setTimeout(() => {
+        modalHeader.innerHTML = `Tie Game`;
+        winModal.style.display = 'flex';
+        playAgain();
+      });
     }
+    console.log(moveCount);
   }
 
   // Selects the position chosen by the current player
@@ -160,10 +173,14 @@ const GamePlay = (() => {
   winModal.addEventListener('click', (e) => {
     if (e.target.id === 'yes') {
       winModal.style.display = 'none';
-      resetGame();
+      playAgain();
+    }
+
+    if (e.target.id === 'no') {
+      winModal.style.display = 'none';
+      endGame();
     }
   });
-
 
   const startGame = () => {
     displayPlayerInfo();
