@@ -113,3 +113,22 @@ section {
   cursor: pointer;
   background-color: #aaaaaa35;
 }
+
+#win-modal {
+  background-color: #8b3b3bf5;
+  color: #aaaaaa;
+  text-align: center;
+  border: 3px solid #8b3b3b;
+  border-radius: 10px;
+  padding: 2rem;
+  width: 25%;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 100;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

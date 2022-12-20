@@ -22,6 +22,10 @@ const Gameboard = (() => {
     }
   }
 
+  const resetGame = () => {
+    gameboard.length = 0;
+  }
+
   const render = () => {
     clearGrid();
     drawGrid();
@@ -31,6 +35,7 @@ const Gameboard = (() => {
     render,
     addGamePiece,
     board,
+    resetGame,
   };
 })();
 
@@ -47,10 +52,12 @@ const GamePlay = (() => {
   const {board} = Gameboard;
   const {addGamePiece} = Gameboard;
   const {render} = Gameboard;
+  const {resetGame} = Gameboard;
   const oIndex = [];
   const xIndex = [];
+  const winModal = document.getElementById('win-modal');
   
-  let count = 1;
+  let moveCount = 1;
   let playerCount = 0;
 
   const playerName = (name) => {
@@ -93,23 +100,36 @@ const GamePlay = (() => {
     player2Info.nextElementSibling.innerHTML = `Wins: ${player2.gamesWon}`;
   }
 
+  const playAgain = () => {
+    moveCount = 1;
+    oIndex.length = 0;
+    xIndex.length = 0;
+    resetGame();
+    displayPlayerInfo();
+    render();
+  }
+  
   const checkWinner = () => {
     const oWin = checkWinPattern(oIndex);
     const xWin = checkWinPattern(xIndex);
+    
+    const modalHeader = winModal.querySelector('h3');
 
     if (oWin === true) {
       setTimeout(() => {
-        alert(`${player2.getName()} wins`);
+        modalHeader.innerHTML = `Congratulations ${player2.getName()}!! You Win!!`;
+        winModal.style.display = 'flex';
         player2.gamesWon += 1;
-        console.log(player2.gamesWon);
-        render();
-        displayPlayerInfo();
+        playAgain();
       });
     } else if(xWin === true) {
-      console.log('X wins');
+      setTimeout(() => {
+        modalHeader.innerHTML = `Congratulations ${player1.getName()}!! You Win!!`;
+        winModal.style.display = 'flex';
+        player1.gamesWon += 1;
+        playAgain();
+      });
     }
-    console.log(oWin);
-    console.log(xWin);
   }
 
   // Selects the position chosen by the current player
@@ -118,11 +138,11 @@ const GamePlay = (() => {
       if (e.target.innerHTML !== '') {
         return;
       } 
-      e.target.innerHTML = (count % 2) === 0 ? 'O' : 'X';
+      e.target.innerHTML = (moveCount % 2) === 0 ? 'O' : 'X';
       const selectedPiece = e.target.innerHTML;
       const position = e.target.id;
 
-      if ((count % 2) === 0) {
+      if ((moveCount % 2) === 0) {
         e.target.innerHTML = 'O';
         oIndex.push(position.slice(-1));
       } else {
@@ -130,13 +150,21 @@ const GamePlay = (() => {
         xIndex.push(position.slice(-1));
       }
       addGamePiece(selectedPiece, position.slice(-1));    
-      if (count > 4) {
+      if (moveCount > 4) {
         checkWinner();
       }
-      count += 1;    
+      moveCount += 1;    
     });
   }
  
+  winModal.addEventListener('click', (e) => {
+    if (e.target.id === 'yes') {
+      winModal.style.display = 'none';
+      resetGame();
+    }
+  });
+
+
   const startGame = () => {
     displayPlayerInfo();
     selectPosition();
