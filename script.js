@@ -42,10 +42,14 @@ const Gameboard = (() => {
 
 
 const Player = (name) => {
-  const getName = () => name;
+  let playerName = name;
+  const getName = () => playerName;
+  const changeName = (inputName) => {
+    playerName = inputName;
+    return this;
+  };
   const gamesWon = 0; 
-
-  return {getName, gamesWon};
+  return {getName, gamesWon, changeName};
 }
 
 
@@ -58,6 +62,7 @@ const GamePlay = (() => {
   const oIndex = [];
   const xIndex = [];
   const winModal = document.getElementById('win-modal');
+  const startModal = document.getElementById('start-modal');
   const btnGroup = document.querySelectorAll('button');
   
   let moveCount = 1;
@@ -68,11 +73,13 @@ const GamePlay = (() => {
       playerCount += 1;
       this.name = `Player ${playerCount}`;
     } else {
+      playerCount += 1;
       this.name = name;
     }    
     return this.name;
   }
 
+  
   const player1 = Player(playerName());
   const player2 = Player(playerName());
 
@@ -167,7 +174,11 @@ const GamePlay = (() => {
     });
   }
  
-
+  const startGame = () => {
+    displayPlayerInfo();
+    selectPosition();
+    render();
+  }  
 
   btnGroup.forEach(button => {
     button.addEventListener('click', (e) => {
@@ -175,27 +186,18 @@ const GamePlay = (() => {
         winModal.style.display = 'none';
         playAgain();
       }
-  
       if (e.target.id === 'no') {
         winModal.style.display = 'none';
         endGame();
+        startModal.style.display = 'flex';
+      }
+      if (e.target.id === 'start-game') {
+        player1.changeName(document.getElementById('player1').value);
+        player2.changeName(document.getElementById('player2').value);
+        startGame();
+        startModal.style.display = 'none';
+        console.log(player1.getName());
       }
     });
-  })
-
-  ;
-
-
-  const startGame = () => {
-    displayPlayerInfo();
-    selectPosition();
-    render();
-  }  
-
-  return {
-    startGame,
-    displayPlayerInfo,
-  };
+  });
 })();
-
-GamePlay.startGame();

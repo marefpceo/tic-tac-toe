@@ -38,7 +38,7 @@ section {
   justify-content:center;
   gap: 5%;
   background-color: #aaaaaa;
-  height: 95vh;
+  height: 85vh;
   width: 100%;
 }
 
@@ -53,11 +53,13 @@ button {
 }
 
 button:active, 
-.buttons > button:hover {
+.buttons > button:hover,
+#start-game:hover {
   background-color: #aaaaaa;
   color: #8b3b3b;
   border: 1px solid #8b3b3b;
   transform: translate(2%, 2%);
+  cursor: pointer;
 }
 
 .container {
@@ -140,7 +142,8 @@ button:active,
   background-color: #aaaaaa35;
 }
 
-#win-modal {
+#win-modal,
+#start-modal {
   background-color: #8b3b3bf5;
   color: #aaaaaa;
   text-align: center;
@@ -157,4 +160,23 @@ button:active,
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+#start-modal {
+  background-color: #8b3b3bfa;
+  color: #cfcfcf;
+  display: flex;
+  flex-direction: column;
+  gap: 10%;
+  width: 75%;
+  height: 70%;
+}
+
+#start-modal input {
+  background-color: #cfcfcf;
+  border-radius: 5px;
+  border: 2px solid #aaaaaa;
+  color: #8b3b3b;
+  font-size: 1rem;
+  height: 1.8rem;
 }
