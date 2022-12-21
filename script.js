@@ -79,7 +79,6 @@ const GamePlay = (() => {
     return this.name;
   }
 
-  
   const player1 = Player(playerName());
   const player2 = Player(playerName());
 
